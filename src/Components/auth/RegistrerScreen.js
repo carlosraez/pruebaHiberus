@@ -1,0 +1,85 @@
+import React from 'react'
+import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { useForm } from '../../hooks/useForm'
+import Hiberus  from '../../assets/hiberus_0_1.png'
+import { startRegisterEmailPasswordNameSurname } from '../../actions/actions';
+
+export const RegistrerScreen = () => {
+
+    const dispatch = useDispatch()
+
+    const [formValues, handleInputChange] = useForm({
+        email:'',
+        password:'',
+        name:'',
+        surname:'',
+    })
+    
+    const { email, password, name, surname } = formValues
+
+    
+    const handleRegister = () => { 
+        
+        dispatch( startRegisterEmailPasswordNameSurname(email, password , name , surname))
+
+    }
+
+    return (
+        <div>
+                <div>
+                        <img src={Hiberus} alt="Hiberus" width="50" height="400" className="card-img-top" />
+                </div>
+                <div className ="mb-3">
+                        <label  className="form-label">Your Email</label>
+                        <input 
+                            type="email" 
+                            onChange={handleInputChange} 
+                            className="form-control" 
+                            name="email" 
+                            placeholder="nanme@gmail.com"
+                            autoComplete="off"
+                        />
+                </div>
+                    <div className="mb-3">
+                        <label  className="form-label">Your Password</label>
+                        <input 
+                            type="password" 
+                            onChange={handleInputChange} 
+                            className="form-control" n
+                            name="password" 
+                            placeholder="Your password" 
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label  className="form-label">Name</label>
+                        <input 
+                            type="text" 
+                            onChange={handleInputChange} 
+                            className="form-control" n
+                            name="name" 
+                            placeholder="Your name" 
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label  className="form-label">Surname</label>
+                        <input 
+                            type="text" 
+                            onChange={handleInputChange} 
+                            className="form-control" n
+                            surname="surname" 
+                            placeholder="Your surname" 
+                            autoComplete="off"
+                        />
+                    </div>
+                 <div>
+                    <Link className="btn btn-outline-info boton" onClick={handleRegister}>Register</Link>
+                </div>
+                <div>
+                    <Link to="/auth/login" className="btn" >Already have and acount?</Link>
+                </div>
+        </div>
+    )
+}
