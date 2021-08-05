@@ -2,12 +2,21 @@ import { types } from "../types/types"
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
-        
-        setTimeout(() => {
-
-            dispatch( login(email,password) )
+        fetch('http://51.38.51.187:5050/api/v1/auth/log-in', {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+            headers: {
+                'Content-Type': 'application/json' },})
+            .then((res) => res.json())
+            .then((res) => { 
+                console.log(res.statusCode);
+                if (res.statusCode === 404) { alert(res.message)}
             
-        }, 3500);
+            })
+            .then(() => dispatch( register(email,password) ))
 
     }
 }
@@ -22,13 +31,18 @@ export const startRegisterEmailPasswordNameSurname = (email, password, name, sur
                 email,
                 password,
                 name,
-                surname
+                surname,
             }),
             headers: {
                 'Content-Type': 'application/json' },})
             .then((res) => res.json())
+            .then((res) => { 
+                if (res.statusCode === 409) { alert(res.message)}
+                if (res.statusCode === 200 ) {}
+            
+            })
             .then(() => dispatch( register(email,password,name, surname) ))
-        
+            
     }
 }
 
