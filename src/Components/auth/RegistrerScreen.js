@@ -27,8 +27,8 @@ export const RegistrerScreen = () => {
 
     return (
         <div>
-                <div>
-                        <img src={Hiberus} alt="Hiberus" width="50" height="400" className="card-img-top" />
+                <div className="auth__logo">
+                        <img src={Hiberus} alt="Hiberus"  className="card-img-top" />
                 </div>
                 <div className ="mb-3">
                         <label  className="form-label">Your Email</label>
@@ -37,7 +37,7 @@ export const RegistrerScreen = () => {
                             onChange={handleInputChange} 
                             className="form-control" 
                             name="email" 
-                            placeholder="nanme@gmail.com"
+                            placeholder="name@gmail.com"
                             autoComplete="off"
                         />
                 </div>
@@ -75,7 +75,7 @@ export const RegistrerScreen = () => {
                         />
                     </div>
                  <div>
-                    <Link className="btn btn-outline-info boton" onClick={handleRegister}>Register</Link>
+                    <button className="btn btn-outline-info boton" onClick={handleRegister}>Register</button>
                 </div>
                 <div>
                     <Link to="/auth/login" className="btn" >Already have and acount?</Link>

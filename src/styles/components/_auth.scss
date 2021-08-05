@@ -1,15 +1,20 @@
 
 .auth__box-container {
-    width: 96%;
+ 
 	max-width: 480px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding: 10px;
 
 }
 
 .auth__box {
     border-radius: 5px;
     color: $primary;
+}
+
+.auth__logo {
+    width: 22em;
+   
 }
 

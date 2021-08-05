@@ -15,13 +15,20 @@ export const startLoginEmailPassword = (email, password) => {
 
 export const startRegisterEmailPasswordNameSurname = (email, password, name, surname) => {
     return (dispatch) => {
+
+        fetch('http://51.38.51.187:5050/api/v1/auth/sign-up', {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                password,
+                name,
+                surname
+            }),
+            headers: {
+                'Content-Type': 'application/json' },})
+            .then((res) => res.json())
+            .then(() => dispatch( register(email,password,name, surname) ))
         
-        setTimeout(() => {
-
-            dispatch( register(email,password,name, surname) )
-            
-        }, 3500);
-
     }
 }
 
