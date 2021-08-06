@@ -1,28 +1,59 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import validator from 'validator'
 import { useForm } from '../../hooks/useForm'
 import Hiberus  from '../../assets/hiberus_0_1.png'
 import { startRegisterEmailPasswordNameSurname } from '../../actions/actions';
+import { setError, removeError } from '../../actions/ui'
 
 export const RegistrerScreen = () => {
 
     const dispatch = useDispatch()
+    const { msgError } = useSelector( state => state.ui )
+
 
     const [formValues, handleInputChange] = useForm({
         email:'',
         password:'',
         name:'',
         surname:'',
+        password2:'',
     })
     
-    const { email, password, name, surname } = formValues
-
+    const { email, password,password2, name, surname,  } = formValues
+    console.log(formValues);
     
     const handleRegister = () => { 
         
-        dispatch( startRegisterEmailPasswordNameSurname(email, password , name , surname))
+        if (isFormValid() ) {
+            dispatch( startRegisterEmailPasswordNameSurname(email, password , name , surname))
+        }
+    }
 
+    const isFormValid = () => {
+        
+        if(name.trim().length === 0) {
+            dispatch( setError('Name is required') )
+            
+            return false
+        } else if ( !validator.isEmail(email) ) {
+            dispatch( setError('Email is not valid') )
+      
+            return false
+         } else if ( !validator.isEmpty(surname) ) {
+            dispatch( setError('Surname is required') )
+      
+            return false
+         
+          } else if ( password !== password2 || password.length < 5 ) {
+            dispatch( setError('Password should be at least 6 characters and match each other') )
+           
+            return false
+         } 
+        
+        dispatch( removeError() )
+        return true
     }
 
     return (
@@ -30,6 +61,13 @@ export const RegistrerScreen = () => {
                 <div className="auth__logo">
                         <img src={Hiberus} alt="Hiberus"  className="card-img-top" />
                 </div>
+                {
+                    msgError && (
+                        <div className="alert alert-warning">
+                        {msgError}
+                        </div>
+                    )
+                }
                 <div className ="mb-3">
                         <label  className="form-label">Your Email</label>
                         <input 
@@ -48,7 +86,17 @@ export const RegistrerScreen = () => {
                             onChange={handleInputChange} 
                             className="form-control" n
                             name="password" 
-                            placeholder="Your password" 
+                            placeholder="Password" 
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input 
+                            type="password" 
+                            onChange={handleInputChange} 
+                            className="form-control" n
+                            name="password2" 
+                            placeholder="Repite password" 
                             autoComplete="off"
                         />
                     </div>
