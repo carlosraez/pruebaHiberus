@@ -22,7 +22,6 @@ export const RegistrerScreen = () => {
     })
     
     const { email, password,password2, name, surname,  } = formValues
-    console.log(formValues);
     
     const handleRegister = () => { 
         
@@ -41,7 +40,7 @@ export const RegistrerScreen = () => {
             dispatch( setError('Email is not valid') )
       
             return false
-         } else if ( !validator.isEmpty(surname) ) {
+         } else if ( surname.trim().length === 0 ) {
             dispatch( setError('Surname is required') )
       
             return false
@@ -117,7 +116,7 @@ export const RegistrerScreen = () => {
                             type="text" 
                             onChange={handleInputChange} 
                             className="form-control" n
-                            surname="surname" 
+                            name="surname" 
                             placeholder="Your surname" 
                             autoComplete="off"
                         />

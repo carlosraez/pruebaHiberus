@@ -20,7 +20,6 @@ export const LoginScreen = () => {
   
        e.preventDefault()
          dispatch( startLoginEmailPassword(email, password) ) 
-
     }
 
     return (
