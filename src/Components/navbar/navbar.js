@@ -2,7 +2,6 @@ import React,  { useState }  from 'react'
 import { Link } from 'react-router-dom'
 import Hiberus from '../../assets/avatar.png'
 
-
 export const Navbar = () => {
 
    const [userAuth] = useState(true)

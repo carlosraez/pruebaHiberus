@@ -12,11 +12,20 @@ export const startLoginEmailPassword = (email, password) => {
                 'Content-Type': 'application/json' },})
             .then((res) => res.json())
             .then((res) => { 
-                console.log(res.statusCode);
+               
+                if (typeof res.accessToken === 'string') {
+                  
+                    localStorage.setItem('accesToken', res.accessToken)
+                  
+                } 
+                if (typeof res.refreshToken === 'string') {
+                    localStorage.setItem('refreshToken', res.refreshToken)
+                }
+               
                 if (res.statusCode === 404) { alert(res.message)}
             
             })
-            .then(() => dispatch( register(email,password) ))
+            .then(() => dispatch( login (email,password,) ))
 
     }
 }

@@ -12,7 +12,6 @@ export const RegistrerScreen = () => {
     const dispatch = useDispatch()
     const { msgError } = useSelector( state => state.ui )
 
-
     const [formValues, handleInputChange] = useForm({
         email:'',
         password:'',
