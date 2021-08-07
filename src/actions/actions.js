@@ -10,25 +10,20 @@ export const startLoginEmailPassword = (email, password) => {
             }),
             headers: {
                 'Content-Type': 'application/json' },})
-            .then((res) => res.json())
-            .then((res) => { 
-               
-                if (typeof res.accessToken === 'string') {
+            .then( (res) => { res.json() })
+            .then((res) => {  
+              if (typeof res.accessToken === 'string') {
                   
                     localStorage.setItem('accesToken', res.accessToken)
-                  
-                } 
-                if (typeof res.refreshToken === 'string') {
-                    localStorage.setItem('refreshToken', res.refreshToken)
-                }
-               
-                if (res.statusCode === 404) { alert(res.message)}
-            
+                      dispatch( login (email,password))
+                }  
+                
+                else if (res.statusCode === 404) { alert(res.message)} 
+ 
             })
-            .then((res) =>{  dispatch( login (email,password)  ) 
-        
-            }) 
+            .catch( (err) => console.log(err))
             let token = localStorage.getItem('accesToken')
+            
             fetch('http://51.38.51.187:5050/api/v1/users/me', {
             method: 'GET',
             headers: {
@@ -39,6 +34,7 @@ export const startLoginEmailPassword = (email, password) => {
             .then((res) => {
                 console.log(res);
             })
+            
             
 
     }
