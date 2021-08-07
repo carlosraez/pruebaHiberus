@@ -25,8 +25,8 @@ export const LoginScreen = () => {
 
     return (
         <div>
-                <div className="auth__logo">
-                    <img src={Hiberus} alt="Hiberus" className="card-img-top" />
+                <div className="auth__logoContainer">
+                    <img src={Hiberus} alt="Hiberus" className="card-img-top auth__brandLogo" />
                 </div>
                 <div className ="mb-3">
                         <label  className="form-label">Email</label>
@@ -52,15 +52,15 @@ export const LoginScreen = () => {
                     </div>
                  <div>
                     <button 
-                    className="btn btn-outline-info" 
+                    className="btn btn-outline-info button" 
                     onClick={handleLogin}
                     disabled={loading}
                     >
            
                      Login </button>
                 </div>
-                <div>
-                    <Link to="/auth/registrer" className="btn" >Create New Account</Link>
+                <div className="button__container-handleLogin">
+                    <Link to="/auth/registrer" className="button__handleLogin" >Create New Account</Link>
                 </div>
         </div>
     )

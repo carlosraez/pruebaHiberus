@@ -11,6 +11,8 @@ export const RegistrerScreen = () => {
 
     const dispatch = useDispatch()
     const { msgError } = useSelector( state => state.ui )
+    const { loading } = useSelector(state => state.ui)
+    console.log(loading);
 
     const [formValues, handleInputChange] = useForm({
         email:'',
@@ -56,8 +58,8 @@ export const RegistrerScreen = () => {
 
     return (
         <div>
-                <div className="auth__logo">
-                        <img src={Hiberus} alt="Hiberus"  className="card-img-top" />
+                <div className="auth__logoContainer">
+                        <img src={Hiberus} alt="Hiberus"  className="card-img-top auth__brandLogo" />
                 </div>
                 {
                     msgError && (
@@ -121,10 +123,15 @@ export const RegistrerScreen = () => {
                         />
                     </div>
                  <div>
-                    <button className="btn btn-outline-info boton" onClick={handleRegister}>Register</button>
+                    <button 
+                       className="btn btn-outline-info button" 
+                       onClick={handleRegister}
+                       disabled={loading}
+                       >
+                         Register</button>
                 </div>
-                <div>
-                    <Link to="/auth/login" className="btn" >Already have and acount?</Link>
+                <div className="button__container-handleLogin">
+                    <Link to="/auth/login" className="button__handleLogin" >Already have and acount?</Link>
                 </div>
         </div>
     )

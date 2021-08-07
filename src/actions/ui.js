@@ -23,7 +23,7 @@ export const startLoading = () => (
 
 export const finishLoading = ( ) => (
     {
-        type: types.uiRemoveError,
+        type: types.uiFinishLoading,
     
     }
 )

@@ -64,24 +64,20 @@ export const startRegisterEmailPasswordNameSurname = (email, password, name, sur
                 name,
                 surname,
             }),
-            headers: {
-                'Content-Type': 'application/json' },})
-            .then((res) => res.json())
+            headers: {'Content-Type': 'application/json' }})
             .then((res) => { 
-                console.log(res);
-                if (res.statusCode === 409) { 
+
+                if (res.status === 409) { 
                     alert(res.message)
                     dispatch( finishLoading())
                 }
-                if (res.statusCode === 200 ) { 
+                if (res.status === 204 ) { 
                     dispatch( finishLoading() )
                     alert('El usuario se ha dado de alta correctamente') }
-                
-            })
-            .then(() => dispatch( register(email,password,name, surname,) ))
-            
+            })   
     }
 }
+
 
 export const login = (email, password, token) => (
  {
