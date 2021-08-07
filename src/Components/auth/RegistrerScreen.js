@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator'
+
 import { useForm } from '../../hooks/useForm'
 import Hiberus  from '../../assets/hiberus_0_1.png'
 import { startRegisterEmailPasswordNameSurname } from '../../actions/actions';

@@ -15,10 +15,18 @@ export const startLoginEmailPassword = (email, password) => {
             .then( (res) => { res.json() })
             .then((res) => { 
               dispatch( finishLoading()) 
-              if (typeof res.accessToken === 'string') {
-                  
+              if (res.status === 200) {
+                if (typeof res.accessToken === 'string') {
+            
                     localStorage.setItem('accesToken', res.accessToken)
-                    dispatch( login (email,password, res.accessToken))
+                    dispatch( login (email,password ))
+                    dispatch( finishLoading() )
+                }  
+            } 
+              if (typeof res.accessToken === 'string') {
+            
+                    localStorage.setItem('accesToken', res.accessToken)
+                    dispatch( login (email,password ))
                     dispatch( finishLoading() )
                 }  
                 
@@ -29,7 +37,7 @@ export const startLoginEmailPassword = (email, password) => {
  
             })
             .catch( (err) => { 
-               //revisar dispatch( finishLoading()) 
+               dispatch( finishLoading()) 
                 console.warn(err);
                 })
             let token = localStorage.getItem('accesToken')
@@ -43,7 +51,7 @@ export const startLoginEmailPassword = (email, password) => {
             .then((res) => res.json())
             .then((res) => {
                 console.log(res);
-                //no funciona dispatch( finishLoading())
+                dispatch( finishLoading())
      
             })
             
@@ -85,7 +93,6 @@ export const login = (email, password, token) => (
         payload: {
             email,
             password,
-            token,
         }
     }) 
     
@@ -98,6 +105,5 @@ export const login = (email, password, token) => (
                    password,
                    name,
                    surname,
-                   token
                }
         }) 
