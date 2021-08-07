@@ -7,23 +7,23 @@ export const setError = ( err ) => (
     }
 )
 
-export const removeError = ( err ) => (
+export const removeError = ( ) => (
     {
         type: types.uiRemoveError,
-        payload: err
+
     }
 )
 
-export const startLoading = ( loading ) => (
+export const startLoading = () => (
     {
-        type: types.uiRemoveError,
-        payload: loading
+        type: types.uiStartLoading,
+
     }
 )
 
-export const finishLoading = ( loading ) => (
+export const finishLoading = ( ) => (
     {
         type: types.uiRemoveError,
-        payload: loading
+    
     }
 )

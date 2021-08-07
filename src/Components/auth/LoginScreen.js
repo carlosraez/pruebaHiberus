@@ -9,7 +9,7 @@ export const LoginScreen = () => {
 
     const dispatch = useDispatch()
     const { loading } = useSelector(state => state.ui)
-
+    console.log(loading);
     const [formValues, handleInputChange] = useForm({
         email:'',
         password:'',
@@ -19,7 +19,7 @@ export const LoginScreen = () => {
     
     const handleLogin = (e) => { 
     
-       e.preventDefault()
+         e.preventDefault()
          dispatch( startLoginEmailPassword(email, password) ) 
     }
 

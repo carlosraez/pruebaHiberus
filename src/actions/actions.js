@@ -1,9 +1,9 @@
 import { types } from "../types/types"
-import { startLoading, finishLoading } from "./ui"
+import { finishLoading, startLoading } from "./ui"
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
-           dispatch( startLoading() )
+            dispatch( startLoading() )
            fetch('http://51.38.51.187:5050/api/v1/auth/log-in', {
             method: 'POST',
             body: JSON.stringify({
@@ -29,11 +29,11 @@ export const startLoginEmailPassword = (email, password) => {
  
             })
             .catch( (err) => { 
-                dispatch( finishLoading()) 
-                console.log(err);
+               //revisar dispatch( finishLoading()) 
+                console.warn(err);
                 })
             let token = localStorage.getItem('accesToken')
-            
+            dispatch( startLoading() )
             fetch('http://51.38.51.187:5050/api/v1/users/me', {
             method: 'GET',
             headers: {
@@ -43,7 +43,8 @@ export const startLoginEmailPassword = (email, password) => {
             .then((res) => res.json())
             .then((res) => {
                 console.log(res);
-                dispatch( finishLoading() )
+                //no funciona dispatch( finishLoading())
+     
             })
             
             
