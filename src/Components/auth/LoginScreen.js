@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../../hooks/useForm'
 import Hiberus  from '../../assets/hiberus_0_1.png'
 import { startLoginEmailPassword } from '../../actions/actions'
@@ -8,6 +8,7 @@ import { startLoginEmailPassword } from '../../actions/actions'
 export const LoginScreen = () => {
 
     const dispatch = useDispatch()
+    const { loading } = useSelector(state => state.ui)
 
     const [formValues, handleInputChange] = useForm({
         email:'',
@@ -50,7 +51,13 @@ export const LoginScreen = () => {
                         />
                     </div>
                  <div>
-                    <button className="btn btn-outline-info" onClick={handleLogin}>Login </button>
+                    <button 
+                    className="btn btn-outline-info" 
+                    onClick={handleLogin}
+                    disabled={loading}
+                    >
+           
+                     Login </button>
                 </div>
                 <div>
                     <Link to="/auth/registrer" className="btn" >Create New Account</Link>

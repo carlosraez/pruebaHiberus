@@ -1,7 +1,9 @@
 import { types } from "../types/types"
+import { startLoading, finishLoading } from "./ui"
 
 export const startLoginEmailPassword = (email, password) => {
     return (dispatch) => {
+           dispatch( startLoading() )
            fetch('http://51.38.51.187:5050/api/v1/auth/log-in', {
             method: 'POST',
             body: JSON.stringify({
@@ -11,17 +13,25 @@ export const startLoginEmailPassword = (email, password) => {
             headers: {
                 'Content-Type': 'application/json' },})
             .then( (res) => { res.json() })
-            .then((res) => {  
+            .then((res) => { 
+              dispatch( finishLoading()) 
               if (typeof res.accessToken === 'string') {
                   
                     localStorage.setItem('accesToken', res.accessToken)
-                      dispatch( login (email,password))
+                    dispatch( login (email,password, res.accessToken))
+                    dispatch( finishLoading() )
                 }  
                 
-                else if (res.statusCode === 404) { alert(res.message)} 
+                else if (res.statusCode === 404) { 
+                    alert(res.message) 
+                    dispatch( finishLoading() )
+                } 
  
             })
-            .catch( (err) => console.log(err))
+            .catch( (err) => { 
+                dispatch( finishLoading()) 
+                console.log(err);
+                })
             let token = localStorage.getItem('accesToken')
             
             fetch('http://51.38.51.187:5050/api/v1/users/me', {
@@ -33,6 +43,7 @@ export const startLoginEmailPassword = (email, password) => {
             .then((res) => res.json())
             .then((res) => {
                 console.log(res);
+                dispatch( finishLoading() )
             })
             
             
@@ -43,6 +54,7 @@ export const startLoginEmailPassword = (email, password) => {
 
 export const startRegisterEmailPasswordNameSurname = (email, password, name, surname) => {
     return (dispatch) => {
+       dispatch( startLoading() )
        fetch('http://51.38.51.187:5050/api/v1/auth/sign-up', {
             method: 'POST',
             body: JSON.stringify({
@@ -56,8 +68,13 @@ export const startRegisterEmailPasswordNameSurname = (email, password, name, sur
             .then((res) => res.json())
             .then((res) => { 
                 console.log(res);
-                if (res.statusCode === 409) { alert(res.message)}
-                if (res.statusCode === 200 ) { alert('El usuario se ha dado de alta correctamente') }
+                if (res.statusCode === 409) { 
+                    alert(res.message)
+                    dispatch( finishLoading())
+                }
+                if (res.statusCode === 200 ) { 
+                    dispatch( finishLoading() )
+                    alert('El usuario se ha dado de alta correctamente') }
                 
             })
             .then(() => dispatch( register(email,password,name, surname,) ))

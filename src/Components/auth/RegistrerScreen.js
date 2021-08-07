@@ -82,7 +82,7 @@ export const RegistrerScreen = () => {
                         <input 
                             type="password" 
                             onChange={handleInputChange} 
-                            className="form-control" n
+                            className="form-control" 
                             name="password" 
                             placeholder="Password" 
                             autoComplete="off"
@@ -92,7 +92,7 @@ export const RegistrerScreen = () => {
                         <input 
                             type="password" 
                             onChange={handleInputChange} 
-                            className="form-control" n
+                            className="form-control" 
                             name="password2" 
                             placeholder="Repite password" 
                             autoComplete="off"
@@ -103,7 +103,7 @@ export const RegistrerScreen = () => {
                         <input 
                             type="text" 
                             onChange={handleInputChange} 
-                            className="form-control" n
+                            className="form-control" 
                             name="name" 
                             placeholder="Your name" 
                             autoComplete="off"
@@ -114,7 +114,7 @@ export const RegistrerScreen = () => {
                         <input 
                             type="text" 
                             onChange={handleInputChange} 
-                            className="form-control" n
+                            className="form-control" 
                             name="surname" 
                             placeholder="Your surname" 
                             autoComplete="off"

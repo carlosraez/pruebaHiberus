@@ -13,3 +13,17 @@ export const removeError = ( err ) => (
         payload: err
     }
 )
+
+export const startLoading = ( loading ) => (
+    {
+        type: types.uiRemoveError,
+        payload: loading
+    }
+)
+
+export const finishLoading = ( loading ) => (
+    {
+        type: types.uiRemoveError,
+        payload: loading
+    }
+)
