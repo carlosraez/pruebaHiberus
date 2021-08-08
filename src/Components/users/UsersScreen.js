@@ -52,15 +52,13 @@ export const UsersScreen = () => {
             },
              })
             .then((res) => {
-                console.log(res);
                 if (res.status === 204) {
                     alert('the user has been deleted')
                 }
                 if (res.status === 404) {
                     alert('User not found')
                 }
-            })
-            
+            }) 
     }
    
     return (
@@ -80,6 +78,7 @@ export const UsersScreen = () => {
                 /> 
                : 
                (
+                <div class="table-responsive">
                  <table className="table">
                                 <thead>
                                         <tr>
@@ -104,7 +103,8 @@ export const UsersScreen = () => {
                             } )
                         }
                         </tbody>
-                </table>    
+                </table> 
+            </div>   
                )
             }
             

@@ -12,8 +12,8 @@ export const User = (user) => {
         <th scope="row">{surname}</th> 
         <th scope="row">{email}</th>
         <th>
-        <button onClick={handleViewUser}  className="btn btn-outline-info button">Ver</button> 
-        <button onClick={ handleDelete } className="btn btn-outline-danger ml-10">Eliminar</button>
+        <button onClick={handleViewUser}  className="btn btn-outline-info button btnTable">Ver</button> 
+        <button onClick={ handleDelete } className="btn btn-outline-danger btnTable">Eliminar</button>
         </th>   
        </tr>
     )
