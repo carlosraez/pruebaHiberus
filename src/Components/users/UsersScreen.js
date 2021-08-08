@@ -14,6 +14,7 @@ export const UsersScreen = () => {
         fetch('http://51.38.51.187:5050/api/v1/users', {
             method: 'GET',
             headers: {
+                
                 Authorization: `bearer ${token}`
             },
              })
@@ -46,7 +47,7 @@ export const UsersScreen = () => {
             </div>
           
             <hr></hr>
-            <div className="row row-cols-1 row-cols-md-3 g-4">
+            <div className="row row-cols-1 row-cols-md-6 g-4">
             {
                 items.map( (user) => {
                     return  ( 
