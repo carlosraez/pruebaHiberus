@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../../hooks/useForm.js'
-import validator from 'validator'
+
 
 import { setError, removeError } from '../../actions/ui'
 
@@ -9,18 +9,21 @@ import { setError, removeError } from '../../actions/ui'
 export const View = (props) => {
 
     const dispatch = useDispatch()
+
     const { msgError } = useSelector( state => state.ui )
     const [formValues, handleInputChange, setFormValues] = useForm({
-        email:'',
         name:'',
         surname:'',
+        password:'',
+        password2:'',
+        email:'',
     })
 
-    const  { email, name, surname } = formValues
-    console.log(formValues);
-  
+    const  {  name, surname, password , password2 , email} = formValues
+    
     const  { handleBackTable, userActualId } = props
-     
+
+   
     useEffect(() => {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
@@ -33,11 +36,10 @@ export const View = (props) => {
             .then((res) => res.json())
             .then((res) => {
                 setFormValues({
-                    email: res.email,
-                    name: res.name,
-                    surname: res.surname
-                })
-                
+                    email:res.email,
+                    name:res.name,
+                    surname:res.surname
+                })   
             })
     }, [userActualId, setFormValues])
 
@@ -55,11 +57,13 @@ export const View = (props) => {
                 email,
                 name,
                 surname,
+                password,
+                id:userActualId
             }),
              })
             .then((res) => {
                 if (res.status === 200) {
-                    alert('the user has been updated')
+                    alert('The user has been updated')
                 }
                 if (res.status === 404) {
                     alert('User not found')
@@ -75,15 +79,15 @@ export const View = (props) => {
             dispatch( setError('Name is required') )
             
             return false
-        } else if ( !validator.isEmail(email) ) {
-            dispatch( setError('Email is not valid') )
-      
-            return false
-         } else if ( surname.trim().length === 0 ) {
+        }  else if ( surname.trim().length === 0 ) {
             dispatch( setError('Surname is required') )
       
             return false
-         }
+         }  else if ( password !== password2 || password.length < 5 ) {
+            dispatch( setError('Password should be at least 6 characters and match each other') )
+           
+            return false
+         } 
         
         dispatch( removeError() )
         return true
@@ -109,18 +113,27 @@ export const View = (props) => {
                     )
                 }
                <form>
-               <div className ="mb-3">
-                        <label  className="form-label">New Email</label>
+                <div className="mb-3">
+                        <label  className="form-label">New Password</label>
                         <input 
-                            type="email" 
+                            type="password" 
                             onChange={handleInputChange} 
                             className="form-control" 
-                            name="email" 
-                            placeholder="name@gmail.com"
+                            name="password" 
+                            placeholder="Password" 
                             autoComplete="off"
-                            value={email}
                         />
-                </div>
+                    </div>
+                    <div className="mb-3">
+                        <input 
+                            type="password" 
+                            onChange={handleInputChange} 
+                            className="form-control" 
+                            name="password2" 
+                            placeholder="Repite password" 
+                            autoComplete="off"
+                        />
+                    </div>
                     <div className="mb-3">
                         <label  className="form-label">Name</label>
                         <input 
