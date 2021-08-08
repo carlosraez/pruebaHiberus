@@ -1,14 +1,17 @@
-import React,  { useState }  from 'react'
+import React  from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { finishLogged } from '../../actions/actions';
 import Hiberus from '../../assets/avatar.png'
 
 export const Navbar = () => {
 
-   const [userAuth] = useState(true)
+    const dispatch = useDispatch()
+    const { logged } = useSelector(state => state.auth)
 
    const  handleLogout = () => {
-         
-        localStorage.removeItem('userValid')
+        dispatch(finishLogged())
+        localStorage.removeItem('accesToken')
     }
   
     return (
@@ -17,7 +20,7 @@ export const Navbar = () => {
             <img src={Hiberus} alt="Hiberus-logo" width="60" height="50" className="d-inline-block align-text-top" />
                 <div className="navbar-nav">
                         {
-                            userAuth ? <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">LogOut</Link>
+                            logged ? <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">LogOut</Link>
                             :
                             <Link className="nav-link" aria-current="page" to="/login">Login</Link>
                         }

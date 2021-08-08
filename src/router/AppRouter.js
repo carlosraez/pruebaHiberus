@@ -1,44 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router,
     Switch,
-    Route,
-    Redirect
+    Redirect,
 } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import { DashboardRoute  } from './DashboardRoute'
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 import { AuthRouter } from './AuthRouter'
-import { useDispatch } from 'react-redux'
+import { Loading } from '../Components/loading/Loading'
+import { finishLogged, startLogged } from '../actions/actions';
 
 export const AppRouter = () => {
 
+    const dispatch = useDispatch()
+    const { logged } = useSelector(state => state.auth)
     const [cheking, setCheking] = useState(true)
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    console.log(logged);
 
     useEffect(() => {
              
             const localMemo = localStorage.getItem('accesToken')
-       
+            console.log(localMemo);
             if( localMemo ) {
-                setIsAuthenticated( true )
+                dispatch(startLogged())
             }
             else {
-                setIsAuthenticated( false )
+                dispatch(finishLogged())
             }
         
         setCheking(false)
 
 
-    }, [setCheking, setIsAuthenticated])
+    }, [setCheking,dispatch])
+
+    if (cheking) {
+      return  <Loading  />
+    }
 
     return (
         <Router>
                 <Switch>
-                         <Route 
+                         <PublicRoute
                                 path='/auth'
                                 component={AuthRouter}
+                                isAuthenticated={ logged } 
                             />
-                            <Route 
-                                exact path='/users'
-                                component={DashboardRoute}
+                             <PrivateRoute 
+                                 isAuthenticated={ logged } 
+                                 path="/" 
+                                 component={ DashboardRoute} 
                             />
                          <Redirect to="/auth/login" />
                 </Switch>

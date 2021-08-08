@@ -107,3 +107,18 @@ export const login = (email, password, token) => (
                    surname,
                }
         }) 
+
+    
+ export const startLogged = () => (
+    {
+        type: types.startLogged
+
+    }
+ )
+
+ export const finishLogged = () => (
+    {
+        type: types.finishLogged
+
+    }
+ )
