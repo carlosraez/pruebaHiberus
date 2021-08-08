@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { User } from './User'
 import { useCounter } from '../../hooks/useCounter'
-
-
+import { useSelector } from 'react-redux';
 
 export const UsersScreen = () => {
+
+    const { token } = useSelector(state => state.auth)
 
     useEffect(() => {
         fetch('http://51.38.51.187:5050/api/v1/users', {
             method: 'GET',
             headers: {
-               // Authorization: `bearer ${token}`
+                Authorization: `bearer ${token}`
             },
              })
             .then((res) => res.json())
@@ -18,7 +19,7 @@ export const UsersScreen = () => {
                 console.log(res);
      
             })
-    }, [])
+    }, [token])
 
     const data = [{
         name:'Carlos',

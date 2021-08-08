@@ -2,6 +2,7 @@
 export const types = {
     login:'[Auth] login',
     logout:'[Auth] logout',
+    token:'[Auth] beraver',
     startLogged:'[Auth] logged',
     finishLogged:'[Auth] finish logged',
 

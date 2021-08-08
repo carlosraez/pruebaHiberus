@@ -12,28 +12,19 @@ export const startLoginEmailPassword = (email, password) => {
             }),
             headers: {
                 'Content-Type': 'application/json' },})
+            .then((res) => res.json())   
             .then((res) => { 
-              dispatch( finishLoading()) 
             console.log(res);
-              if (res.status === 200) {
-                  
-                dispatch( startLogged() )
-                
+              dispatch( finishLoading()) 
+              
                 if (typeof res.accessToken === 'string') {
             
                     localStorage.setItem('accesToken', res.accessToken)
                     dispatch( login (email,password ))
                     dispatch( finishLoading() )
                     dispatch( startLogged() )
-                }  
-            } 
-              if (typeof res.accessToken === 'string') {
-            
-                    localStorage.setItem('accesToken', res.accessToken)
-                    dispatch( login (email,password ))
-                    dispatch( finishLoading() )
-                }  
-                
+                    dispatch( tokenStart(res.accessToken))
+                }   
                 else if (res.statusCode === 404) { 
                     alert(res.message) 
                     dispatch( finishLoading() )
@@ -44,26 +35,8 @@ export const startLoginEmailPassword = (email, password) => {
                dispatch( finishLoading()) 
                 console.warn(err);
                 })
-          
-           /*  dispatch( startLoading() )
-            fetch('http://51.38.51.187:5050/api/v1/users/me', {
-            method: 'GET',
-            headers: {
-                Authorization: `bearer ${token}`
-            },
-             })
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-                dispatch( finishLoading())
-     
-            }) */
-            
-            
-
     }
 }
-
 
 export const startRegisterEmailPasswordNameSurname = (email, password, name, surname) => {
     return (dispatch) => {
@@ -86,10 +59,10 @@ export const startRegisterEmailPasswordNameSurname = (email, password, name, sur
                 if (res.status === 204 ) { 
                     dispatch( finishLoading() )
                     alert('El usuario se ha dado de alta correctamente') }
+                    dispatch( startLogged() )
             })   
     }
 }
-
 
 export const login = (email, password, token) => (
  {
@@ -100,8 +73,7 @@ export const login = (email, password, token) => (
         }
     }) 
     
-
-    export const register = (email, password, name, surname, token) => (
+export const register = (email, password, name, surname, token) => (
         {
                type: types.login,
                payload: {
@@ -112,7 +84,15 @@ export const login = (email, password, token) => (
                }
         }) 
 
-    
+export const tokenStart = ( token ) => (
+            {
+                   type: types.token,
+                   payload: {
+                       token,
+                   }
+            }) 
+
+
  export const startLogged = () => (
     {
         type: types.startLogged

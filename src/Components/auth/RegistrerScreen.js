@@ -13,7 +13,6 @@ export const RegistrerScreen = () => {
     const dispatch = useDispatch()
     const { msgError } = useSelector( state => state.ui )
     const { loading } = useSelector(state => state.ui)
-    console.log(loading);
 
     const [formValues, handleInputChange] = useForm({
         email:'',

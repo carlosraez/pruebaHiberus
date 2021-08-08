@@ -9,7 +9,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import { AuthRouter } from './AuthRouter'
 import { Loading } from '../Components/loading/Loading'
-import { finishLogged, startLogged } from '../actions/actions';
+import { finishLogged, startLogged, tokenStart } from '../actions/actions';
 
 export const AppRouter = () => {
 
@@ -23,6 +23,7 @@ export const AppRouter = () => {
             console.log(localMemo);
             if( localMemo ) {
                 dispatch(startLogged())
+                dispatch( tokenStart(localMemo))
             }
             else {
                 dispatch(finishLogged())
