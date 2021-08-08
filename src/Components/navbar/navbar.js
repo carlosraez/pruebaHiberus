@@ -19,7 +19,7 @@ export const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <div className="navbar-nav">
-                        <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">LogOut</Link>
+                        <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">Logout</Link>
                 </div>
             </div>
         </nav>

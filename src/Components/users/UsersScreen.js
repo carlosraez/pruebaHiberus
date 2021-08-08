@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { User } from './User'
+import { View } from './View'
 
 export const UsersScreen = () => {
 
     
     const [users, setUsers] = useState({
         count:0,
-        items:[]
+        items:[],
     })
+
+    const [view, setView ] = useState(true)
 
     useEffect(() => {
         const token = localStorage.getItem('accesToken')
@@ -25,19 +28,36 @@ export const UsersScreen = () => {
                     items:res.items
                 })
             })
-    })
+    },)
 
     const { count, items } = users
        
-    const handleUpdate = () => {
-        alert('Me pulsaste')
+    const handleUpdate = (id) => {
+        
+        setView(true)
     }
 
     const handleDelete = (id) => {
-        alert('me pulsaste')
-        console.log(id);
+        const token = localStorage.getItem('accesToken')
+        fetch(`http://51.38.51.187:5050/api/v1/users/${id}`, {
+            method: 'GET',
+            headers: {
+                
+               Authorization: `bearer ${token}`
+            },
+             })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 204) {
+                    alert('the user has been deleted')
+                }
+                if (res.status === 404) {
+                    alert('User not found')
+                }
+            })
+            
     }
-
+   
     return (
         <div className="container">
             <h1>Users</h1>
@@ -47,31 +67,40 @@ export const UsersScreen = () => {
             </div>
           
             <hr></hr>
-            <table class="table">
-                 <thead>
-                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Surname</th>
-                            <th scope="col">email</th>
-                            <th scope="col">Actions</th>
-                         </tr>
-                 </thead>
-            <tbody>
             {
-                items.map( (user,i) => {
-                    return  ( 
-                    <User 
-                        key={user.id} 
-                        index={i + 1}
-                        {...user} 
-                        handleUpdate={() =>  handleUpdate(user.id) } 
-                        handleDelete={() =>  handleDelete(user.uid) }
-                    />)
-                } )
+               view ? <View 
+               
+               handleBackTable={() => {setView(false) }} /> 
+               : 
+               (
+                 <table className="table">
+                                <thead>
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Surname</th>
+                                        <th scope="col">email</th>
+                                        <th scope="col">Actions</th>
+                                        </tr>
+                                </thead>
+                        <tbody>
+                        {
+                            items.map( (user,i) => {
+                                return  ( 
+                                <User 
+                                    key={user.id} 
+                                    index={i + 1}
+                                    {...user} 
+                                    handleViewUser={() =>  handleUpdate(user.id) } 
+                                    handleDelete={() =>  handleDelete(user.id) }
+                                />)
+                            } )
+                        }
+                        </tbody>
+                </table>    
+               )
             }
-            </tbody>
-        </table>    
+            
         </div>
     )
 }

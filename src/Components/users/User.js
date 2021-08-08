@@ -3,7 +3,7 @@ import React from 'react'
 
 export const User = (user) => {
    
-    const { name, index, surname, email } = user
+    const { name, index, surname, email, handleViewUser, handleDelete } = user
    
     
 
@@ -14,8 +14,8 @@ export const User = (user) => {
         <th scope="row">{surname}</th> 
         <th scope="row">{email}</th>
         <th>
-        <button className="btn btn-outline-info">Ver</button> 
-        <button className="btn btn-outline-danger">Eliminar</button>
+        <button onClick={handleViewUser}  className="btn btn-outline-info button">Ver</button> 
+        <button onClick={ handleDelete } className="btn btn-outline-danger ml-10">Eliminar</button>
         </th>   
        </tr>
     )
