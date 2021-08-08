@@ -9,18 +9,16 @@ export const View = (props) => {
 
     const dispatch = useDispatch()
     const { msgError } = useSelector( state => state.ui )
-    const [formValues, handleInputChange] = useForm({
+    const [formValues, handleInputChange, setValues] = useForm({
         email:'',
-        password:'',
         name:'',
         surname:'',
-        password2:'',
     })
 
-    const {email,password, password2, name, surname } = formValues
+    const  { email, name, surname } = formValues
+  
     const  { handleBackTable, userActualId } = props
      
-
     useEffect(() => {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
@@ -32,14 +30,41 @@ export const View = (props) => {
              })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
+                setValues({
+                    email: res.email,
+                    name: res.name,
+                    surname: res.surname
+                })
+                
             })
-    }, [userActualId])
+    }, [userActualId, setValues])
 
     const handleUpdate = () => {
-        //actuaizar user
-        isFormValid() 
     
+        if ( isFormValid() ) {
+            const token = localStorage.getItem('accesToken')
+        fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
+            method: 'PUT',
+            headers: {
+                cors:'no-cors',
+                Authorization: `bearer ${token}`
+            },
+            body: JSON.stringify({
+                email,
+                name,
+                surname,
+            }),
+             })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert('the user has been updated')
+                }
+                if (res.status === 404) {
+                    alert('User not found')
+                }
+            })
+        }
+
     }
 
     const isFormValid = () => {
@@ -56,12 +81,7 @@ export const View = (props) => {
             dispatch( setError('Surname is required') )
       
             return false
-         
-          } else if ( password !== password2 || password.length < 5 ) {
-            dispatch( setError('Password should be at least 6 characters and match each other') )
-           
-            return false
-         } 
+         }
         
         dispatch( removeError() )
         return true
@@ -72,10 +92,9 @@ export const View = (props) => {
             <div className="col-6">
                 <div className="card">
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Email:  </li>
-                    <li className="list-group-item">Password:  </li>
-                    <li className="list-group-item">Name: </li>
-                    <li className="list-group-item">Surname:  </li>
+                    <li className="list-group-item">Email: {email}  </li>
+                    <li className="list-group-item">Name: {name}</li>
+                    <li className="list-group-item">Surname: {surname} </li>
                 </ul>
                 </div>
             </div>
@@ -97,29 +116,9 @@ export const View = (props) => {
                             name="email" 
                             placeholder="name@gmail.com"
                             autoComplete="off"
+                            value={email}
                         />
                 </div>
-                    <div className="mb-3">
-                        <label  className="form-label">New Password</label>
-                        <input 
-                            type="password" 
-                            onChange={handleInputChange} 
-                            className="form-control" 
-                            name="password" 
-                            placeholder="Password" 
-                            autoComplete="off"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <input 
-                            type="password" 
-                            onChange={handleInputChange} 
-                            className="form-control" 
-                            name="password2" 
-                            placeholder="Repite password" 
-                            autoComplete="off"
-                        />
-                    </div>
                     <div className="mb-3">
                         <label  className="form-label">Name</label>
                         <input 
@@ -129,6 +128,7 @@ export const View = (props) => {
                             name="name" 
                             placeholder="Your name" 
                             autoComplete="off"
+                            value={name}
                         />
                     </div>
                     <div className="mb-3">
@@ -140,6 +140,7 @@ export const View = (props) => {
                             name="surname" 
                             placeholder="Your surname" 
                             autoComplete="off"
+                            value={surname}
                         />
                     </div>
                     <button 
