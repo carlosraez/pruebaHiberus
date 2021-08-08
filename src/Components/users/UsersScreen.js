@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { User } from './User'
 import { useCounter } from '../../hooks/useCounter'
 import { useSelector } from 'react-redux';
@@ -6,6 +6,10 @@ import { useSelector } from 'react-redux';
 export const UsersScreen = () => {
 
     const { token } = useSelector(state => state.auth)
+    const [users, setUsers] = useState({
+        count:0,
+        items:[]
+    })
 
     useEffect(() => {
         fetch('http://51.38.51.187:5050/api/v1/users', {
@@ -16,33 +20,16 @@ export const UsersScreen = () => {
              })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
-     
+                setUsers({
+                    count:res.count,
+                    items:res.items
+                })
             })
     }, [token])
 
-    const data = [{
-        name:'Carlos',
-        surname:'Raez',
-        email:'carlosraez@gmail.com'
-    },{
-        name:'Carlos',
-        surname:'Raez',
-        email:'carlosraez@gmail.com'
-    },
-    {
-        name:'Carlos',
-        surname:'Raez',
-        email:'carlosraez@gmail.com'
-    },{
-        name:'Carlos',
-        surname:'Raez',
-        email:'carlosraez@gmail.com'
-    },{
-        name:'Carlos',
-        surname:'Raez',
-        email:'carlosraez@gmail.com'
-    }]
+    const { count, items } = users
+    console.log(users);
+
     const {counter,increment, decrement, setCounter} = useCounter(1)
 
    //paginacion max 2 hojas 
@@ -65,7 +52,7 @@ export const UsersScreen = () => {
             <hr></hr>
             <div className="row row-cols-1 row-cols-md-3 g-4">
             {
-                data.map( (user) => {
+                items.map( (user) => {
                     return   <User key={user.id} {...user}  />
                 } )
             }
