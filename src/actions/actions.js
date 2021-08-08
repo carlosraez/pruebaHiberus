@@ -23,7 +23,7 @@ export const startLoginEmailPassword = (email, password) => {
                     dispatch( login (email,password ))
                     dispatch( finishLoading() )
                     dispatch( startLogged() )
-                    dispatch( tokenStart(res.accessToken))
+ 
                 }   
                 else if (res.statusCode === 404) { 
                     alert(res.message) 
@@ -83,14 +83,6 @@ export const register = (email, password, name, surname, token) => (
                    surname,
                }
         }) 
-
-export const tokenStart = ( token ) => (
-            {
-                   type: types.token,
-                   payload: {
-                       token,
-                   }
-            }) 
 
 
  export const startLogged = () => (
