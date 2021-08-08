@@ -2,11 +2,9 @@ import React from 'react'
 
 
 export const User = (user) => {
-   
+ 
     const { name, index, surname, email, handleViewUser, handleDelete } = user
-   
     
-
     return (
     <tr>
         <th scope="row">{index}</th>

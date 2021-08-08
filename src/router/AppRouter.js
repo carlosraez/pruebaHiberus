@@ -19,7 +19,7 @@ export const AppRouter = () => {
   
     useEffect(() => {
              
-            const localMemo = localStorage.getItem('accesToken')
+            const localMemo = localStorage.getItem('refreshToken')
 
             if( localMemo ) {
                 dispatch(startLogged())

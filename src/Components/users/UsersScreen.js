@@ -3,21 +3,24 @@ import { User } from './User'
 import { View } from './View'
 
 export const UsersScreen = () => {
-
-    
+ 
     const [users, setUsers] = useState({
         count:0,
         items:[],
     })
 
-    const [view, setView ] = useState(true)
+    const [view, setView ] = useState({
+        viewState:false,
+        idUser:''
+
+    })
 
     useEffect(() => {
         const token = localStorage.getItem('accesToken')
         fetch('http://51.38.51.187:5050/api/v1/users', {
             method: 'GET',
             headers: {
-                
+                cors:'no-cors',
                 Authorization: `bearer ${token}`
             },
              })
@@ -33,17 +36,19 @@ export const UsersScreen = () => {
     const { count, items } = users
        
     const handleUpdate = (id) => {
-        
-        setView(true)
+
+        setView({
+            idUser:id,
+            viewState:true})
     }
 
     const handleDelete = (id) => {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${id}`, {
-            method: 'GET',
+            method: 'DELETE',
             headers: {
-                
-               Authorization: `bearer ${token}`
+                cors:'no-cors',
+                Authorization: `bearer ${token}`
             },
              })
             .then((res) => {
@@ -68,9 +73,11 @@ export const UsersScreen = () => {
           
             <hr></hr>
             {
-               view ? <View 
-               
-               handleBackTable={() => {setView(false) }} /> 
+               view.viewState ? 
+               <View 
+                userActualId={ view.idUser }
+                handleBackTable={ () => { setView({ viewState:false, id:0}) }} 
+                /> 
                : 
                (
                  <table className="table">

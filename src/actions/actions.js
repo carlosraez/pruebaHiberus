@@ -20,6 +20,7 @@ export const startLoginEmailPassword = (email, password) => {
                 if (typeof res.accessToken === 'string') {
             
                     localStorage.setItem('accesToken', res.accessToken)
+                    localStorage.setItem('refreshToken', res.refreshToken)
                     dispatch( login (email,password ))
                     dispatch( finishLoading() )
                     dispatch( startLogged() )
