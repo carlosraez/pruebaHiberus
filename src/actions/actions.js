@@ -12,15 +12,19 @@ export const startLoginEmailPassword = (email, password) => {
             }),
             headers: {
                 'Content-Type': 'application/json' },})
-            .then( (res) => { res.json() })
             .then((res) => { 
               dispatch( finishLoading()) 
+            console.log(res);
               if (res.status === 200) {
+                  
+                dispatch( startLogged() )
+                
                 if (typeof res.accessToken === 'string') {
             
                     localStorage.setItem('accesToken', res.accessToken)
                     dispatch( login (email,password ))
                     dispatch( finishLoading() )
+                    dispatch( startLogged() )
                 }  
             } 
               if (typeof res.accessToken === 'string') {
@@ -40,8 +44,8 @@ export const startLoginEmailPassword = (email, password) => {
                dispatch( finishLoading()) 
                 console.warn(err);
                 })
-            let token = localStorage.getItem('accesToken')
-            dispatch( startLoading() )
+          
+           /*  dispatch( startLoading() )
             fetch('http://51.38.51.187:5050/api/v1/users/me', {
             method: 'GET',
             headers: {
@@ -53,7 +57,7 @@ export const startLoginEmailPassword = (email, password) => {
                 console.log(res);
                 dispatch( finishLoading())
      
-            })
+            }) */
             
             
 
@@ -76,7 +80,7 @@ export const startRegisterEmailPasswordNameSurname = (email, password, name, sur
             .then((res) => { 
 
                 if (res.status === 409) { 
-                    alert(res.message)
+                    alert('Email Already exists')
                     dispatch( finishLoading())
                 }
                 if (res.status === 204 ) { 
@@ -119,6 +123,6 @@ export const login = (email, password, token) => (
  export const finishLogged = () => (
     {
         type: types.finishLogged
-
+        
     }
  )

@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { User } from './User'
 import { useCounter } from '../../hooks/useCounter'
 
 
 
 export const UsersScreen = () => {
+
+    useEffect(() => {
+        fetch('http://51.38.51.187:5050/api/v1/users', {
+            method: 'GET',
+            headers: {
+               // Authorization: `bearer ${token}`
+            },
+             })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+     
+            })
+    }, [])
 
     const data = [{
         name:'Carlos',

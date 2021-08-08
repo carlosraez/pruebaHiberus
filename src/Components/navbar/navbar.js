@@ -10,8 +10,9 @@ export const Navbar = () => {
     const { logged } = useSelector(state => state.auth)
 
    const  handleLogout = () => {
-        dispatch(finishLogged())
-        localStorage.removeItem('accesToken')
+        dispatch( finishLogged() )
+        console.log(logged);
+        localStorage.removeItem('accesToken', 'refreshToken')
     }
   
     return (
@@ -19,11 +20,7 @@ export const Navbar = () => {
             <div className="container-fluid">
             <img src={Hiberus} alt="Hiberus-logo" width="60" height="50" className="d-inline-block align-text-top" />
                 <div className="navbar-nav">
-                        {
-                            logged ? <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">LogOut</Link>
-                            :
-                            <Link className="nav-link" aria-current="page" to="/login">Login</Link>
-                        }
+                        <Link className="nav-link" onClick={handleLogout} aria-current="page" to="/login">LogOut</Link>
                 </div>
             </div>
         </nav>

@@ -16,8 +16,7 @@ export const AppRouter = () => {
     const dispatch = useDispatch()
     const { logged } = useSelector(state => state.auth)
     const [cheking, setCheking] = useState(true)
-    console.log(logged);
-
+  
     useEffect(() => {
              
             const localMemo = localStorage.getItem('accesToken')
