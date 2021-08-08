@@ -20,7 +20,7 @@ export const AppRouter = () => {
     useEffect(() => {
              
             const localMemo = localStorage.getItem('accesToken')
-            console.log(localMemo);
+
             if( localMemo ) {
                 dispatch(startLogged())
             }
