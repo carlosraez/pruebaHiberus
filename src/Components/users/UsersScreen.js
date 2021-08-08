@@ -47,19 +47,31 @@ export const UsersScreen = () => {
             </div>
           
             <hr></hr>
-            <div className="row row-cols-1 row-cols-md-6 g-4">
+            <table class="table">
+                 <thead>
+                         <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">email</th>
+                            <th scope="col">Actions</th>
+                         </tr>
+                 </thead>
+            <tbody>
             {
-                items.map( (user) => {
+                items.map( (user,i) => {
                     return  ( 
                     <User 
                         key={user.id} 
+                        index={i + 1}
                         {...user} 
                         handleUpdate={() =>  handleUpdate(user.id) } 
                         handleDelete={() =>  handleDelete(user.uid) }
                     />)
                 } )
             }
-        </div>
+            </tbody>
+        </table>    
         </div>
     )
 }
