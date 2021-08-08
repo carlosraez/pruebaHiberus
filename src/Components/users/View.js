@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { useForm } from '../../hooks/useForm.js'
 import { useDispatch, useSelector } from 'react-redux'
+import { useForm } from '../../hooks/useForm.js'
 import validator from 'validator'
+
 import { setError, removeError } from '../../actions/ui'
 
 
@@ -9,13 +10,14 @@ export const View = (props) => {
 
     const dispatch = useDispatch()
     const { msgError } = useSelector( state => state.ui )
-    const [formValues, handleInputChange, setValues] = useForm({
+    const [formValues, handleInputChange, setFormValues] = useForm({
         email:'',
         name:'',
         surname:'',
     })
 
     const  { email, name, surname } = formValues
+    console.log(formValues);
   
     const  { handleBackTable, userActualId } = props
      
@@ -30,19 +32,19 @@ export const View = (props) => {
              })
             .then((res) => res.json())
             .then((res) => {
-                setValues({
+                setFormValues({
                     email: res.email,
                     name: res.name,
                     surname: res.surname
                 })
                 
             })
-    }, [userActualId, setValues])
+    }, [userActualId, setFormValues])
 
     const handleUpdate = () => {
     
         if ( isFormValid() ) {
-            const token = localStorage.getItem('accesToken')
+        const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
             method: 'PUT',
             headers: {
