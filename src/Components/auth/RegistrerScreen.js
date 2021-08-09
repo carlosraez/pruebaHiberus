@@ -32,7 +32,7 @@ export const RegistrerScreen = () => {
     }
 
     const isFormValid = () => {
-        
+        //aqui hacemos la comprobación del formulario el cual comprobamos que es correcto
         if(name.trim().length === 0) {
             dispatch( setError('Name is required') )
             

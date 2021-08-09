@@ -41,7 +41,7 @@ export const UsersScreen = () => {
             idUser:id,
             viewState:true})
     }
-
+     //en esta función borramos al usuario de la tabla y para saber que es el correcto mandamos el id por parámetro
     const handleDelete = (id) => {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${id}`, {

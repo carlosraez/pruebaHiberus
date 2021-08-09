@@ -23,7 +23,7 @@ export const View = (props) => {
     
     const  { handleBackTable, userActualId } = props
 
-   
+   //Aquí precargamos la información del usuario que vamos a actualizar de esta forma solo cargamos en esta pantalla la información que necesitamos
     useEffect(() => {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
@@ -44,7 +44,7 @@ export const View = (props) => {
     }, [userActualId, setFormValues])
 
     const handleUpdate = () => {
-    
+        //si el formulario es correcto en esta función actualizamos la información
         if ( isFormValid() ) {
         const token = localStorage.getItem('accesToken')
         fetch(`http://51.38.51.187:5050/api/v1/users/${userActualId}`, {
@@ -74,7 +74,7 @@ export const View = (props) => {
     }
 
     const isFormValid = () => {
-        
+         //aqui hacemos la comprobación del formulario el cual comprobamos que es correcto
         if(name.trim().length === 0) {
             dispatch( setError('Name is required') )
             
